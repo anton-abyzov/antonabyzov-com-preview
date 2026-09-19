@@ -98,7 +98,9 @@ window.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        // "#" alone is not a valid selector; those anchors are buttons in disguise.
+        const target = (href && href.length > 1) ? document.querySelector(href) : null;
         if (target) {
             const offsetTop = target.offsetTop - 80;
             window.scrollTo({
